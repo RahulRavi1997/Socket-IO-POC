@@ -1,0 +1,68 @@
+    .joinOuterContainer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    align-items: center;
+    background-color: #1A1A1D;
+  }
+  
+  .joinInnerContainer {
+    width: 20%;
+  }
+  
+  .joinInput {
+    border-radius: 0;
+    padding: 15px 20px;
+    width: 100%;
+    border-radius: 8px;
+    border: 3px solid rgb(170, 170, 170);
+  }
+  
+  .heading {
+    color: white;
+    font-size: 2.5em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid white;
+    margin-bottom: 30px;
+  }
+  
+  .button {
+      color: #2979FF;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      border: 3px solid #2979FF;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bolder;
+      background: none;
+      transition: .2s all ease-in-out;
+  }
+
+  .button:hover{
+    background-color: #2979FF;
+    color: #fff;
+  }
+  
+  .mt-20 {
+    margin-top: 20px;
+  }
+  
+  @media (min-width: 320px) and (max-width: 480px) {
+    .joinOuterContainer {
+      height: 100%;
+    }
+  
+    .joinInnerContainer {
+      width: 90%;
+    }
+  
+  
+  }
+  
+  button:focus {
+    outline: 0;
+  }
