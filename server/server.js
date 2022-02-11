@@ -4,6 +4,7 @@ const http = require('http')
 const cors = require('cors')
 
 const {addUser, removeUser, getUser, getUsersInRoom } = require('./users.js');
+const { addMessage, getMessages, clearChat } = require('./messages.js');
 
 const PORT = process.env.PORT || 5000
 
@@ -16,6 +17,8 @@ const io = socketio(server);
 
 app.use(router)
 app.use(cors())
+app.use(express.json())
+
 
 io.on('connection', (socket) => {
     socket.on('join', ({ name, room}, callback) => {
@@ -50,6 +53,13 @@ io.on('connection', (socket) => {
             io.to(user.room).emit('message', { user:'admin', text: `${user.name} left the room.` })
         }
     })
+})
+
+app.get('/history', (req, res) => {
+    res.json(getMessages(req.query.room))
+})
+app.post('/message', (req, res) => {
+    res.json(addMessage(req.body))
 })
 
 server.listen(PORT, ()=> console.log(`Server is up at ${PORT}`))

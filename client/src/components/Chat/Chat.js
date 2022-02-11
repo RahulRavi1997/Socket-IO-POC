@@ -12,6 +12,7 @@ let socket;
 
 const Chat = ({location}) => {
     const [ name, setName ] = useState('')
+    const [ userid, setUserId ] = useState('')
     const [ room, setRoom ] = useState('')
     const [users, setUsers] = useState('');
     const [ input, setInput ] = useState('')
@@ -25,7 +26,11 @@ const Chat = ({location}) => {
         socket = io(ENDPOINT)
 
         setName(name)
+        setUserId(socket.id)
         setRoom(room)
+        fetch(`${ENDPOINT}/history?room=${room}`).then(res => res.json()).then(history => {
+            setMessages([...(history || [])]);
+        })
 
         socket.emit('join', { name, room }, () => {
 
@@ -45,7 +50,7 @@ const Chat = ({location}) => {
 
         socket.on("roomData", ({ users }) => {
             setUsers(users);
-        });  
+        });
     }, [messages])
 
 
@@ -54,6 +59,16 @@ const Chat = ({location}) => {
     
         if(input) {
             socket.emit('sendMessage', input, () => setInput(''))
+            fetch(ENDPOINT+"/message", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({
+                    userid: socket.id,
+                    name,
+                    message: input,
+                    room
+                })
+            })
         }
     }
 

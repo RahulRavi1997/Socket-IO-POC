@@ -22,9 +22,15 @@
   
   .messageContainer {
     display: flex;
-    justify-content: flex-end;
     padding: 0 5%;
     margin-top: 5px;
+  }
+
+  .justifyStart {
+    justify-content: flex-start;
+  }
+  .justifyEnd {
+    justify-content: flex-end;
   }
   
   .sentText {
@@ -65,4 +71,8 @@
   
   .backgroundLight {
     background: #F3F3F3;
+  }
+
+  .alignLeft {
+    align-self: left;
   }
