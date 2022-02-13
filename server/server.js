@@ -26,9 +26,10 @@ io.on('connection', (socket) => {
 
         if(error) return callback(error)
 
-        socket.emit('message', { user: 'admin', text: `${user.name}, entered the room: ${user.room}` })
-        socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} joined!`})
-
+        const text = `${user.name} joined`;
+        const msg1 = { user: null, isActivityMessage: true, text };
+        socket.broadcast.to(user.room).emit('message', msg1)
+        addMessage({ userid:socket.id, name: null, room: user.room, message: text, isActivityMessage: true });
 
         socket.join(user.room)
 
@@ -40,7 +41,7 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id)
 
-        io.to(user.room).emit('message', { user: user.name, text: message})
+        io.to(user.room).emit('message', { user: user.name, text: message })
         io.to(user.room).emit('roomData', { room:user.room, users: getUsersInRoom(user.room)})
 
         callback()
@@ -50,7 +51,9 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
 
         if(user){
-            io.to(user.room).emit('message', { user:'admin', text: `${user.name} left the room.` })
+            const text = `${user.name} left`;
+            io.to(user.room).emit('message', { user: null, isActivityMessage: true, text })
+            addMessage({ userid:socket.id, name: null, room: user.room, message: text , isActivityMessage: true});
         }
     })
 })

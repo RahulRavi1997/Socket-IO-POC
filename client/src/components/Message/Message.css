@@ -32,7 +32,16 @@
   .justifyEnd {
     justify-content: flex-end;
   }
-  
+  .justifyCenter {
+    justify-content: center;
+  }
+  .statusMessage {
+    text-align: center;
+    align-items: center;
+    font-family: Helvetica;
+    padding: 5px;
+  }
+
   .sentText {
     display: flex;
     align-items: center;

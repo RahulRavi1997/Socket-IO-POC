@@ -4,7 +4,7 @@ import './Message.css';
 
 
 
-const Message = ({message: { user, text }, name }) => {
+const Message = ({message: { user, text, isActivityMessage }, name }) => {
     let isSentByCurrentUser = false;
 
     const trimmedName = name.trim();
@@ -13,33 +13,23 @@ const Message = ({message: { user, text }, name }) => {
     }
     
     return (
-        isSentByCurrentUser 
-            ? (
-                <div className="messageContainer justifyEnd">
-                    <p className="sentText pr-10">
-                        You
-                    </p>
-
-                    <div className="messageBox backgroundBlue">
-                        <p className="messageText colorWhite">
-                            {ReactEmoji.emojify(text)}
-                        </p>
-                    </div>
-                </div>
-            )
-            : (
-                <div className="messageContainer justfifyStart">
-                    <div className="messageBox backgroundLight">
-                        <p className="messageText colorDark">
-                            {ReactEmoji.emojify(text)}
-                        </p>
-                    </div>
-                    <p className="sentText pl-10">
-                        {user}
-                    </p>    
-
-                </div>
-            )
+    isActivityMessage ? (
+        <div className="statusMessage">
+          <p>{text}</p>
+        </div>
+    ) : (
+      <div
+        className={"messageContainer " + (isSentByCurrentUser? "justifyEnd": "justfifyStart")}>
+        <p className="sentText pr-10">
+          {isSentByCurrentUser ? "You" : user}
+        </p>
+        <div className={"messageBox " + (isSentByCurrentUser? "backgroundBlue": "backgroundLight")}>
+          <p className={"messageText " + (isSentByCurrentUser ? "colorWhite" : "colorDark")}>
+            {ReactEmoji.emojify(text)}
+          </p>
+        </div>
+      </div>
+    )
     )
 }
 
