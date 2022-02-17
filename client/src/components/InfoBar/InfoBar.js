@@ -1,13 +1,11 @@
 import React from 'react';
-import { X } from 'react-feather';
+import { Trash2, X } from 'react-feather';
 import { Link } from 'react-router-dom';
 import onlineIcon from '../../assets/onlineIcon.png';
 import './InfoBar.css';
 
 
-
-
-const InfoBar = ( {room} ) => (
+const InfoBar = ( {room, clearChat} ) => (
 
     <div className="infoBar">
         <div className="leftInnerContainer">
@@ -19,6 +17,9 @@ const InfoBar = ( {room} ) => (
             <Link to="/">
                 <X color='white' size={20} />
             </Link>
+            <div className="clearChat">
+                <Trash2 color='white' size={20} onClick={clearChat}/>
+            </div>
         </div>
     </div>
     )

@@ -37,14 +37,14 @@ const Chat = ({location}) => {
         });
 
         return () => {
-            socket.emit('disconnect')
-
-            socket.off()
+            socket.emit('disconnect');
+            socket.off();
         }
-    }, [ENDPOINT, location.search])
+    }, [ENDPOINT, location.pathname])
 
     useEffect(() => {
         socket.on('message', (message) => {
+            console.log("message: " + JSON.stringify(message));
             setMessages([...messages, message])
         })
 
@@ -71,11 +71,14 @@ const Chat = ({location}) => {
             })
         }
     }
+    const clearChat = () => {
+        setMessages([])
+    }
 
     return(
         <div className="outerContainer">
             <div className="container">
-                <InfoBar room={room}/>
+                <InfoBar room={room} clearChat={clearChat}/>
                 <Messages messages={messages} name={name} />
                 <Input message={input} setMessage={setInput} sendMessage={sendMessage} />
             </div>

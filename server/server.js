@@ -27,9 +27,8 @@ io.on('connection', (socket) => {
         if(error) return callback(error)
 
         const text = `${user.name} joined`;
-        const msg1 = { user: null, isActivityMessage: true, text };
-        socket.broadcast.to(user.room).emit('message', msg1)
-        addMessage({ userid:socket.id, name: null, room: user.room, message: text, isActivityMessage: true });
+        socket.broadcast.to(user.room).emit('message', { isActivityMessage: true, text })
+        addMessage({ userid:socket.id, room: user.room, message: text, isActivityMessage: true });
 
         socket.join(user.room)
 
@@ -49,11 +48,10 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
-
         if(user){
             const text = `${user.name} left`;
-            io.to(user.room).emit('message', { user: null, isActivityMessage: true, text })
-            addMessage({ userid:socket.id, name: null, room: user.room, message: text , isActivityMessage: true});
+            io.to(user.room).emit('message', { isActivityMessage: true, text })
+            addMessage({ userid:socket.id, room: user.room, message: text , isActivityMessage: true});
         }
     })
 })
